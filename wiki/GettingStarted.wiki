@@ -1,0 +1,17 @@
+#summary One-sentence summary of this page.
+#labels Phase-Deploy
+
+= Introduction =
+
+This program performs face recognition using template matching on ORL face database. For face recognition perform, many features are required including but not limited to:
+
+  # An algorithm extracting unique feature of a face
+  # Another algorithm sophisticate enough to correctly categorize the same face using the extracted unique feature from the face
+
+= Quick Start =
+
+In command console, type the following command in /src directory:
+
+>python facerecog.py
+
+profiling is activated for performance measure. 
