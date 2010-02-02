@@ -3,15 +3,23 @@
 
 = Introduction =
 
-This program performs face recognition using template matching on ORL face database. For face recognition perform, many features are required including but not limited to:
+This program performs face recognition using template matching on ORL face database. Many features are required for face recognition including but not limited to:
 
   # An algorithm extracting unique feature of a face
   # Another algorithm sophisticate enough to correctly categorize the same face using the extracted unique feature from the face
+
+For now, feature extraction was assumed done correctly. Features were extracted by mouse click using Matlab and the information is avaiable in Matlab's mat file format. The program currently uses the information from the mat file.
+
+Template matching algorithm was implemented but its performance is only a proof-of-concept and not complete. 
 
 = Quick Start =
 
 In command console, type the following command in /src directory:
 
 >python facerecog.py
+
+Then, you can choose an operation as either 1) perform face recognition using entire face databse, 2) perform face recognition for a specific image. ('0' for termination.)
+
+For the second option, specify image among the orl face database.
 
 profiling is activated for performance measure. 
