@@ -33,14 +33,14 @@ class FaceFeature(object):
         # Discrete rotation angles
         n = 3 # number of orientation
         theta = np.array(np.zeros(n))        
-        for k in xrange(0, n - 1):
+        for k in xrange(n):
             theta[k] = k * pi / n
         
         # Discrete frequencies
         a = 2 # for octave spacing]
         freq = [1]
         m = 10
-        for k in xrange(0, m - 1):
+        for k in xrange(m):
             freq.append(a ** -k * freq[0])
         
         # get x,y coordinate vector from image array
@@ -56,17 +56,23 @@ class FaceFeature(object):
                                 image_xy[:, 1] * cos(angle)
         
         featureParams = []
+        Gxy = []
         for i in xrange(len(image_xy)):
             x, y = image_xy[i, 0], image_xy[i, 1]            
             for f in freq:
                 for angle in theta:                
                     featureParams.append([x, y, f, angle])
-            self.computeResponse(featureParams[i])                    
+            
+            for m in xrange(len(freq)):
+                for n in xrange(len(theta)):            
+                    Gxy = self.computeResponse(featureParams[i])
+            print Gxy                    
         
     def computeResponse(self, params):
         '''
         compute the response given x,y,f,angle
         '''
+        return params
     
     def computeNormFeatureMatrix(self):
         '''
