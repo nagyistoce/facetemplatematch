@@ -8,16 +8,17 @@ import utils
 from FeatureExtract.facefeature import FaceFeature
 
 class Test(unittest.TestCase):
-
-
+     
     def testFaceFeature(self):
-        gFeature = FaceFeature()        
+        img = '../data/orl_faces/s1/2.pgm'
+        imageArray = utils.im2array(img)
+        gFeature = FaceFeature(imageArray)        
         
     def testComputeFeatureMatrix(self):
         img = '../data/orl_faces/s1/2.pgm'
         imageArray = utils.im2array(img) 
-        gFeature = FaceFeature()
-        gFeature.computeFeatureMatrix(imageArray)
+        gFeature = FaceFeature(imageArray)
+        gFeature.computeFeatureMatrix()
 
 
 if __name__ == "__main__":
