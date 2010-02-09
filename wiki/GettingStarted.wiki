@@ -25,7 +25,7 @@ Required Python Extensions
   * numpy
   * scipy
   * PIL
-  * PyWavelets
+  * [http://wavelets.scipy.org/moin/ PyWavelets]
   * Psyco
 
 ==Quick Start==
