@@ -1,0 +1,8 @@
+#summary Project Roadmap
+#labels Featured,Phase-Implementation
+
+This project aims to provide Cpython face recognition package.
+
+===Roadmap===
+  * Template Matching 
+  * Face Feature Extraction
