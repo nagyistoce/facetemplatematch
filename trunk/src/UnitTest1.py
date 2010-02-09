@@ -34,11 +34,11 @@ class Test(unittest.TestCase):
         imageArray = utils.im2array(img)
         gFeature = GaborFeatureSpace(imageArray)        
         
-    def testComputeFeatureMatrix(self):
+    def testGabprFeatureSpace(self):
         img = '../data/orl_faces/s1/2.pgm'
         imageArray = utils.im2array(img) 
-        gFeature = GaborFeatureSpace(imageArray)
-        gFeature.computeFeatureMatrix()
+        gfs = GaborFeatureSpace(imageArray)
+                
 
 
 if __name__ == "__main__":

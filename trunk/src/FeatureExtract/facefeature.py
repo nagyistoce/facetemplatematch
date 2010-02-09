@@ -25,6 +25,7 @@ OTHER DEALINGS IN THE SOFTWARE.
 
 from math import pi, cos, sin
 import numpy as np
+import scipy.stsci.convolve as convolve
 
 class GaborFeatureSpace(object):
     '''
@@ -41,63 +42,69 @@ class GaborFeatureSpace(object):
         '''
         self.imageArray = imageArray
             
-    def computeFeatureMatrix(self):
+    def featureSpace(self):
         '''
         Compute feature matrix G at (x,y) 
         '''
         
+        # Compute Gabor filter parameters
+        
+        # Compute Gabor filter Response
+        
+        # Construct Gabor Feature Space        
+    
+    def filterResponse(self, params):
         '''
-        construct a feature matrix G
-        at an image location (x,y)
-        '''
-        # Discrete rotation angles
-        n = 4 # number of orientation
-        theta = np.arange(n) * pi / n
+        compute the response given x,y,f,angle
+        '''        
+        return convolve.convolve2d(params, self.imageArray)
+    
+    def filterParams(self):
+        
+        m, n = 5 , 4 # number of frequency and orientation
         
         # Discrete frequencies
-        a = 2 # for octave spacing
-        fmax = 10
-        m = 10
-        freq = fmax*a*np.arange(m)        
+        freq = self.getDiscreteFreq(self.imageArray)
+        theta = self.getDiscreteRotation(self.imageArray)
         
         # get x,y coordinate vector from image array
-        image_xy = np.array(np.transpose(np.nonzero(self.imageArray)))
+        image_xy = np.transpose(np.nonzero(self.imageArray))
         
-        # compute the new x,y coordinate
         image_xy_new = np.zeros(image_xy.shape)
-                       
         for angle in theta:
             image_xy_new[:, 0] = image_xy[:, 1] * cos(angle) + \
                                     image_xy[:, 0] * sin(angle)
             image_xy_new[:, 1] = -1 * image_xy[:, 0] * sin(angle) + \
-                                image_xy[:, 1] * cos(angle)
+                                image_xy[:, 1] * cos(angle)        
         
-        featureParams = []
-        Gxy = []
-        for i in xrange(len(image_xy)):
-            x, y = image_xy[i, 0], image_xy[i, 1]            
-            for f in freq:
-                for angle in theta:                
-                    featureParams.append([x, y, f, angle])
-            
-            for m in xrange(len(freq)):
-                for n in xrange(len(theta)):            
-                    Gxy = self.computeResponse(featureParams[i])
-            print Gxy                  
+        row, col = self.imageArray.shape
+        pixels = row * col
+        sizeResponse = m * n
+        featureParams = np.zeros((pixels, sizeResponse, 2))
+        for i in xrange(len(image_xy)):                        
+            param_xy = [[f, angle] for f in freq for angle in theta]
+            featureParams[i] = param_xy
         
-    def computeResponse(self, params):
+        
+        
+    def getDiscreteFreq(self, pixelIntensity , a=2, m=10):
         '''
-        compute the response given x,y,f,angle
+        Get discrete frequencies at (x,y)
         '''
-        return params
+        fmax = 10        
+        freq = fmax * a * np.arange(m)   
+        return freq 
     
+    def getDiscreteRotation(self, pixelIntensity, orientation=4):
+        '''
+        Discrete rotation angles
+        '''
+        n = orientation
+        theta = np.arange(n) * pi / n
+        return theta        
+        
     def computeNormFeatureMatrix(self):
         '''
         Compute normalized feature matrix G'
-        '''
-        
-    def classDetermination(self):
-        '''
-        Find the best class based on bestConfidence
-        '''
+        '''        
         
