@@ -42,12 +42,12 @@ profiling is activated for performance measure.
 
 == Descriptioin of Packages ==
 
-This project is a combination of python packages. Each package is (or will be) implemented when the necessity kicks in.
+This project is a combination of python packages. Each package is being implemented. See detailed description of packages in corresponding Wiki pages.
 
 Here are the list of packages being implemented.
 
   * Utils
   * imagefilters
   * templatematch
-  * FeatureExtract
+  * [FeatureExtraction FeatureExtract]
   
