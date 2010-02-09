@@ -24,20 +24,20 @@ OTHER DEALINGS IN THE SOFTWARE.
 '''
 
 import unittest
-import utils
-from FeatureExtract.facefeature import FaceFeature
+from ImageUtils import utils
+from FeatureExtract.facefeature import GaborFeatureSpace
 
 class Test(unittest.TestCase):
      
     def testFaceFeature(self):
         img = '../data/orl_faces/s1/2.pgm'
         imageArray = utils.im2array(img)
-        gFeature = FaceFeature(imageArray)        
+        gFeature = GaborFeatureSpace(imageArray)        
         
     def testComputeFeatureMatrix(self):
         img = '../data/orl_faces/s1/2.pgm'
         imageArray = utils.im2array(img) 
-        gFeature = FaceFeature(imageArray)
+        gFeature = GaborFeatureSpace(imageArray)
         gFeature.computeFeatureMatrix()
 
 

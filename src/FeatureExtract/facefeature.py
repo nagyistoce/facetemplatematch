@@ -26,10 +26,10 @@ OTHER DEALINGS IN THE SOFTWARE.
 from math import pi, cos, sin
 import numpy as np
 
-class FaceFeature(object):
+class GaborFeatureSpace(object):
     '''
     Implementation of invariant search of object class
-    location (x,y) in a 2D image space using Gabor filter
+    location (x,y) in a 2D image space using Gabor feature space
     
     Kyrki et al 2004
     '''
@@ -51,17 +51,14 @@ class FaceFeature(object):
         at an image location (x,y)
         '''
         # Discrete rotation angles
-        n = 3 # number of orientation
-        theta = np.array(np.zeros(n))        
-        for k in xrange(n):
-            theta[k] = k * pi / n
+        n = 4 # number of orientation
+        theta = np.arange(n) * pi / n
         
         # Discrete frequencies
-        a = 2 # for octave spacing]
-        freq = [1]
+        a = 2 # for octave spacing
+        fmax = 10
         m = 10
-        for k in xrange(m):
-            freq.append(a ** -k * freq[0])
+        freq = fmax*a*np.arange(m)        
         
         # get x,y coordinate vector from image array
         image_xy = np.array(np.transpose(np.nonzero(self.imageArray)))
@@ -71,7 +68,7 @@ class FaceFeature(object):
                        
         for angle in theta:
             image_xy_new[:, 0] = image_xy[:, 1] * cos(angle) + \
-                                image_xy[:, 0] * sin(angle)
+                                    image_xy[:, 0] * sin(angle)
             image_xy_new[:, 1] = -1 * image_xy[:, 0] * sin(angle) + \
                                 image_xy[:, 1] * cos(angle)
         
@@ -86,7 +83,7 @@ class FaceFeature(object):
             for m in xrange(len(freq)):
                 for n in xrange(len(theta)):            
                     Gxy = self.computeResponse(featureParams[i])
-            print Gxy                    
+            print Gxy                  
         
     def computeResponse(self, params):
         '''
