@@ -1,0 +1,11 @@
+#summary Description of Packages
+#labels Phase-Design,Phase-Implementation
+
+Package List
+
+  * Utils
+  * imagefilters
+  * templateMatch
+  * [FeatureExtraction FeatureExtract]
+
+See the details in the linked Wiki page. If there is no Wiki page available, it is being written  so please come back later to check the description.
