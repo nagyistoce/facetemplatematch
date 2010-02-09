@@ -1,0 +1,11 @@
+#summary Description of Face Feature Extraction package
+#labels Phase-Implementation
+
+= Introduction =
+
+Face feature extraction is one of the key challenges of face recognition. 
+
+
+= Details =
+
+The package is now being implemented based on [http://www2.lut.fi/~kyrki/publications.html Kyrki et al 2004].
