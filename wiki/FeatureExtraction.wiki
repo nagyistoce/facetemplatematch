@@ -8,4 +8,15 @@ Face feature extraction is one of the key challenges of face recognition.
 
 = Details =
 
-The package is now being implemented based on [http://www2.lut.fi/~kyrki/publications.html Kyrki et al 2004].
+The package is now being implemented.
+
+==Algorithm==
+
+Invariant search of object class at location (x, y)  (Kyrki et al 2004)
+
+  # Compute feature matrix G at (x,y)
+  # Compute normalized feature matrix G'
+  # Class category determination using iteration
+
+=== Reference ==
+  # [http://www2.lut.fi/~kyrki/publications.html Kyrki et al 2004].
