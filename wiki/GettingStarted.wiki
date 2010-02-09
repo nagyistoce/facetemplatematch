@@ -12,7 +12,23 @@ For now, feature extraction was assumed done correctly. Features were extracted 
 
 Template matching algorithm was implemented but its performance is only a proof-of-concept and not complete. 
 
-= Quick Start =
+===Assumptions===
+
+For now, feature extraction was assumed done correctly. Features were extracted by mouse click using Matlab and the information is available in Matlab's mat file format. The program currently uses the information from the mat file.
+
+Template matching algorithm was implemented but its performance is only a proof-of-concept and not complete. 
+
+===Requirements===
+Python Interpreter version: Python 2.5, 2.6
+
+Required Python Extensions
+  * numpy
+  * scipy
+  * PIL
+  * PyWavelets
+  * Psyco
+
+==Quick Start==
 
 In command console, type the following command in /src directory:
 
