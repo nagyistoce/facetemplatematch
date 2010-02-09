@@ -25,7 +25,7 @@ OTHER DEALINGS IN THE SOFTWARE.
 
 import numpy as np
 from numpy.linalg import norm, inv
-import utils
+from ImageUtils import utils
 
 class templateMatching(object):
     def templateMatching(self, test_image, template_image, \
