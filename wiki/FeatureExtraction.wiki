@@ -10,9 +10,11 @@ Face feature extraction is one of the key challenges of face recognition.
 
 The package is now being implemented.
 
-==Algorithm==
+==Algorithm using Gabor Feature Space==
 
-Invariant search of object class at location (x, y)  (Kyrki et al 2004)
+An algorithm for face feature extraction uses Gabor feature space for invariant object recognition. The authors say the proposed feature space, illumination, rotation, scale, and translation invariant recognition of objects can be realized within a reasonable amount of computation. 
+
+Algorithm for Invariant search of object class at location (x, y)  (Kyrki et al 2004)
 
   # Compute feature matrix G at (x,y)
   # Compute normalized feature matrix G'
