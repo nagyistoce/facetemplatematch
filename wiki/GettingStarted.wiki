@@ -39,3 +39,15 @@ Then, you can choose an operation as either 1) perform face recognition using en
 For the second option, specify image among the orl face database.
 
 profiling is activated for performance measure. 
+
+== Descriptioin of Packages ==
+
+This project is a combination of python packages. Each package is (or will be) implemented when the necessity kicks in.
+
+Here are the list of packages being implemented.
+
+  * Utils
+  * imagefilters
+  * templatematch
+  * FeatureExtract
+  
