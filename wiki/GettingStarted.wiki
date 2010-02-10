@@ -36,7 +36,10 @@ In command console, type the following command in /src directory:
 
 Then, you can choose an operation as either 1) perform face recognition using entire face databse, 2) perform face recognition for a specific image. ('0' for termination.)
 
-For the second option, specify image among the orl face database.
+For the second option, specify image among the orl face database. The image path is joined with orl face database path. So specify only the folder name and image file name as below. 
+
+> Specify test image path: 's2/2.pgm'
+
 
 profiling is activated for performance measure. 
 
