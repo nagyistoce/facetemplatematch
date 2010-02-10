@@ -57,35 +57,7 @@ class GaborFeatureSpace(object):
         '''
         compute the response given x,y,f,angle
         '''        
-        return convolve.convolve2d(params, self.imageArray)
-    
-    def filterParams(self):
-        
-        m, n = 5 , 4 # number of frequency and orientation
-        
-        # Discrete frequencies
-        freq = self.getDiscreteFreq(self.imageArray)
-        theta = self.getDiscreteRotation(self.imageArray)
-        
-        # get x,y coordinate vector from image array
-        image_xy = np.transpose(np.nonzero(self.imageArray))
-        
-        image_xy_new = np.zeros(image_xy.shape)
-        for angle in theta:
-            image_xy_new[:, 0] = image_xy[:, 1] * cos(angle) + \
-                                    image_xy[:, 0] * sin(angle)
-            image_xy_new[:, 1] = -1 * image_xy[:, 0] * sin(angle) + \
-                                image_xy[:, 1] * cos(angle)        
-        
-        row, col = self.imageArray.shape
-        pixels = row * col
-        sizeResponse = m * n
-        featureParams = np.zeros((pixels, sizeResponse, 2))
-        for i in xrange(len(image_xy)):                        
-            param_xy = [[f, angle] for f in freq for angle in theta]
-            featureParams[i] = param_xy
-        
-        
+        return convolve.convolve2d(params, self.imageArray)    
         
     def getDiscreteFreq(self, pixelIntensity , a=2, m=10):
         '''
