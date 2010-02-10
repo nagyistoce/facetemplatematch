@@ -2,7 +2,7 @@
 import numpy as np
 from scipy import ndimage
 
-import utils
+from ImageUtils import utils
 
 def sobel(img, threshold=0, mode=None):
     imArray = utils.im2array(img)    

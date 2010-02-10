@@ -2,7 +2,7 @@
 import numpy as np
 import pywt
 
-import utils # utils for image formatting
+from ImageUtils import utils # utils for image formatting
 import sobels
 
 def wtHighFreq(img, mode='haar', level=1):

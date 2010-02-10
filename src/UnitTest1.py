@@ -44,8 +44,11 @@ class Test(unittest.TestCase):
         img = '../data/orl_faces/s1/2.pgm'
         gf = GaborFilter(img)
         gb = gf.gabor2DFunction(4, 3)
-                
-
+        
+    def testGaborResponse(self):
+        img = '../data/orl_faces/s1/2.pgm'
+        gf = GaborFilter(img)
+        response = gf.response(4, 3)
 
 if __name__ == "__main__":
     #import sys;sys.argv = ['', 'Test.testName']
