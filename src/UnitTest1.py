@@ -26,7 +26,7 @@ OTHER DEALINGS IN THE SOFTWARE.
 import unittest
 from ImageUtils import utils
 from FeatureExtract.facefeature import GaborFeatureSpace
-from imagefilters.GaborFilter import GaborFilter
+from imagefilters.gaborfilter import GaborFilter
 
 class Test(unittest.TestCase):
      

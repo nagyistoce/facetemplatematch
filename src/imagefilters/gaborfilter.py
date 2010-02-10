@@ -9,7 +9,6 @@ import scipy.stsci.convolve as convolve
 from scipy import signal
 from ImageUtils import utils 
 
-
 class GaborFilter(object):
     '''
     classdocs
