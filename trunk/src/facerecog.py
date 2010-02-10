@@ -31,8 +31,7 @@ import numpy as np
 import cProfile
 
 # custom modules
-import utils
-reload(utils)
+from ImageUtils import utils
 import templatematch.templatematching as templateMatching
 
 def xp01(test_image, db_path, character_index):
