@@ -4,7 +4,7 @@ import scipy.cluster.vq as clusters
 from scipy import signal
 import math
 
-import utils
+from ImageUtils import utils
 import sobels
 
 # fileters

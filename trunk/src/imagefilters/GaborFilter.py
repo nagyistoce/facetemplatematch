@@ -5,7 +5,10 @@ Created on 2010. 2. 10.
 '''
 import numpy as np
 from numpy import cos, sin, pi
+import scipy.stsci.convolve as convolve
+from scipy import signal
 from ImageUtils import utils 
+
 
 class GaborFilter(object):
     '''
@@ -40,30 +43,44 @@ class GaborFilter(object):
         gb = N*np.exp(term2d)*np.exp((2 * pi * f * x_new)*1j)
         
         return gb
+    
+    def response(self, frequency, rotation):
+        gb = self.gabor2DFunction(4, 3)
         
-    def filterParams(self, fn=4, orientation=4, gamma=1, etha=1):
+        response = convolve.convolve2d(gb, self.image)
         
-        m, n = fn , orientation # number of frequency and orientation
+        return response
         
-        # Discrete frequencies
-        freq = self.getDiscreteFreq(self.imageArray)
-        theta = self.getDiscreteRotation(self.imageArray)
+    def gaborwavelet(self, img):
+        '''
+        Gabor wavelet (GW) filter
+        (Is this working?) 
+        '''
+        imArray = utils.im2array(img)
         
-        # get x,y coordinate vector from image array
-        image_xy = np.transpose(np.nonzero(self.imageArray))
+        row_size, col_size = imArray.shape
+        x = np.array(range(1, row_size+1), dtype='float')
+        x = x.reshape((row_size,1))
+        y = np.array(range(1, col_size+1), dtype='float')
+        y = y.reshape((1, col_size))
+    
+        orientations = []
+        for i in range(8):
+            orientations.append(i*pi/8)
+    
+        w = signal.freqz()# spatial frequency
+        G = np.exp( -(x**2 + y**2) / (2*imArray.std()**2))
+        GList =[] # image edge container for different directions
+        for theta in orientations:
+            wave_vector = x*np.cos(theta)+ y*np.sin(theta)
+            G *= np.cos( w * wave_vector)+ 1j*np.sin( w * wave_vector)
         
-        image_xy_new = np.zeros(image_xy.shape)
-        for angle in theta:
-            image_xy_new[:, 0] = image_xy[:, 1] * cos(angle) + \
-                                    image_xy[:, 0] * sin(angle)
-            image_xy_new[:, 1] = -1 * image_xy[:, 0] * sin(angle) + \
-                                image_xy[:, 1] * cos(angle)        
-        
-        row, col = self.imageArray.shape
-        pixels = row * col
-        sizeResponse = m * n
-        featureParams = np.zeros((pixels, sizeResponse, 2))
-        for i in xrange(len(image_xy)):                        
-            param_xy = [[f, angle] for f in freq for angle in theta]
-            featureParams[i] = param_xy
+            # Apply Gabor filter to image    
+            sigma = convolve.convolve2d(imArray, G)
+            GList.append(sigma)
+            # Get the imaginary part of GW
+    
+        # format the output image    
+        sigma, output_image = utils.formatimage(sigma)
+        return output_image
         
