@@ -26,18 +26,24 @@ OTHER DEALINGS IN THE SOFTWARE.
 import unittest
 from ImageUtils import utils
 from FeatureExtract.facefeature import GaborFeatureSpace
+from imagefilters.GaborFilter import GaborFilter
 
 class Test(unittest.TestCase):
      
-    def testFaceFeature(self):
-        img = '../data/orl_faces/s1/2.pgm'
-        imageArray = utils.im2array(img)
-        gFeature = GaborFeatureSpace(imageArray)        
+#    def testFaceFeature(self):
+#        img = '../data/orl_faces/s1/2.pgm'
+#        imageArray = utils.im2array(img)
+#        gFeature = GaborFeatureSpace(imageArray)        
         
-    def testGabprFeatureSpace(self):
+#    def testGabprFeatureSpace(self):
+#        img = '../data/orl_faces/s1/2.pgm'
+#        imageArray = utils.im2array(img) 
+#        gfs = GaborFeatureSpace(imageArray)
+        
+    def testGaborFunction(self):
         img = '../data/orl_faces/s1/2.pgm'
-        imageArray = utils.im2array(img) 
-        gfs = GaborFeatureSpace(imageArray)
+        gf = GaborFilter(img)
+        gb = gf.gabor2DFunction(4, 3)
                 
 
 
