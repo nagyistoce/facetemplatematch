@@ -9,7 +9,7 @@ import time
 #import scipy.cluster.vq as clusters
 from numpy.linalg import *
 
-import utils
+from ImageUtils import utils
 
-__all__ = ["sobels", "binaryedge"]
+__all__ = ["sobels", "binaryedge", "GaborFilter"]
 
