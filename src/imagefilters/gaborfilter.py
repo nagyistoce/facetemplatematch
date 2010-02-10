@@ -7,7 +7,8 @@ import numpy as np
 from numpy import cos, sin, pi
 import scipy.stsci.convolve as convolve
 from scipy import signal
-from ImageUtils import utils 
+from ImageUtils import utils
+from psyco.classes import __metaclass__
 
 class GaborFilter(object):
     '''
