@@ -28,7 +28,8 @@ from numpy import cos, sin, pi
 import scipy.stsci.convolve as convolve
 from scipy import signal
 from ImageUtils import utils
-from psyco.classes import __metaclass__
+#from psyco.classes import __metaclass__
+
 
 class GaborFilter(object):
     '''
@@ -46,8 +47,11 @@ class GaborFilter(object):
         Implementation of normalized 2-D Gabor filter function
         defined by Kyrki V, 2002
         '''
-        f = frequency
-        theta = rotation
+        fmax=1/14
+        a=2
+        k=0
+        f = a**(-1*k)*fmax
+        theta = 2*pi/rotation
         
         xy_index = np.transpose(np.nonzero(self.image))
         
@@ -55,11 +59,16 @@ class GaborFilter(object):
         y = xy_index[:, 1]
         
         x_new = x * cos(theta) + y * sin(theta)
-        y_new = -1 * x * sin(theta) + y * cos(theta)
+        x_new = np.ceil(np.maximum(0, abs(x_new)))
+        x_new = np.minimum(x_new, np.max(x)) 
         
-        N = f**2/(pi*gamma*etha)
-        term2d = -1*f**2*(x_new**2/gamma**2+y_new**2/etha**2)
-        gb = N*np.exp(term2d)*np.exp((2 * pi * f * x_new)*1j)
+        y_new = -1 * x * sin(theta) + y * cos(theta)
+        y_new = np.ceil(np.maximum(0, abs(y_new)))
+        y_new = np.minimum(y_new, np.max(y))
+        
+        N = f ** 2 / (pi * gamma * etha)
+        term2d = -1 * f ** 2 * (x_new ** 2 / gamma ** 2 + y_new ** 2 / etha ** 2)
+        gb = N * np.exp(term2d) * np.exp((2 * pi * f * x_new) * 1j)
         
         return gb
     
@@ -67,9 +76,14 @@ class GaborFilter(object):
         gb = self.gabor2DFunction(frequency, rotation, gamma, etha) 
         
         # Get magnitude of Gabor function?
-               
-        response = convolve.convolve2d(self.image, gb)        
+        gb_magnitude = np.abs(gb)
+        gb_magnitude = gb_magnitude.reshape(self.image.shape)    
+        response = convolve.convolve2d(self.image, gb_magnitude)        
         return response
+
+    def outputImage(self, response):
+        output, imOutput = utils.formatimage(response)  
+        return [output, imOutput]      
         
     def gaborwavelet(self, img):
         '''
@@ -79,21 +93,21 @@ class GaborFilter(object):
         imArray = utils.im2array(img)
         
         row_size, col_size = imArray.shape
-        x = np.array(range(1, row_size+1), dtype='float')
-        x = x.reshape((row_size,1))
-        y = np.array(range(1, col_size+1), dtype='float')
+        x = np.array(range(1, row_size + 1), dtype='float')
+        x = x.reshape((row_size, 1))
+        y = np.array(range(1, col_size + 1), dtype='float')
         y = y.reshape((1, col_size))
     
         orientations = []
         for i in range(8):
-            orientations.append(i*pi/8)
+            orientations.append(i * pi / 8)
     
         w = signal.freqz()# spatial frequency
-        G = np.exp( -(x**2 + y**2) / (2*imArray.std()**2))
-        GList =[] # image edge container for different directions
+        G = np.exp(-(x ** 2 + y ** 2) / (2 * imArray.std()**2))
+        GList = [] # image edge container for different directions
         for theta in orientations:
-            wave_vector = x*np.cos(theta)+ y*np.sin(theta)
-            G *= np.cos( w * wave_vector)+ 1j*np.sin( w * wave_vector)
+            wave_vector = x * np.cos(theta) + y * np.sin(theta)
+            G *= np.cos(w * wave_vector) + 1j * np.sin(w * wave_vector)
         
             # Apply Gabor filter to image    
             sigma = convolve.convolve2d(imArray, G)
