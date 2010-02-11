@@ -1,8 +1,28 @@
 '''
-Created on 2010. 2. 10.
+Copyright (c) 2010 Lee Seongjoo
 
-@author: Seongjoo
+Permission is hereby granted, free of charge, to any person
+obtaining a copy of this software and associated documentation
+files (the "Software"), to deal in the Software without
+restriction, including without limitation the rights to use,
+copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the
+Software is furnished to do so, subject to the following
+conditions:
+
+The above copyright notice and this permission notice shall be
+included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
+HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
+WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
+OTHER DEALINGS IN THE SOFTWARE.
 '''
+
 import numpy as np
 from numpy import cos, sin, pi
 import scipy.stsci.convolve as convolve
@@ -12,9 +32,8 @@ from psyco.classes import __metaclass__
 
 class GaborFilter(object):
     '''
-    classdocs
+    GaborFilter
     '''
-
 
     def __init__(self, image):
         '''
@@ -44,11 +63,12 @@ class GaborFilter(object):
         
         return gb
     
-    def response(self, frequency, rotation):
-        gb = self.gabor2DFunction(4, 3)
+    def response(self, frequency, rotation, gamma=1, etha=1):
+        gb = self.gabor2DFunction(frequency, rotation, gamma, etha) 
         
-        response = convolve.convolve2d(gb, self.image)
-        
+        # Get magnitude of Gabor function?
+               
+        response = convolve.convolve2d(self.image, gb)        
         return response
         
     def gaborwavelet(self, img):
