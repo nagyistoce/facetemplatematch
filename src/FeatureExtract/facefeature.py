@@ -26,7 +26,7 @@ OTHER DEALINGS IN THE SOFTWARE.
 from math import pi, cos, sin
 import numpy as np
 import scipy.stsci.convolve as convolve
-from psyco.classes import __metaclass__
+#from psyco.classes import __metaclass__
 
 class GaborFeatureSpace(object):
     '''

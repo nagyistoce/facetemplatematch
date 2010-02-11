@@ -26,7 +26,8 @@ OTHER DEALINGS IN THE SOFTWARE.
 import unittest
 from ImageUtils import utils
 from FeatureExtract.facefeature import GaborFeatureSpace
-from imagefilters.gaborfilter import GaborFilter
+from filters.gaborfilter import GaborFilter
+import cProfile
 
 class Test(unittest.TestCase):
      
@@ -43,13 +44,22 @@ class Test(unittest.TestCase):
     def testGaborFunction(self):
         img = '../data/orl_faces/s1/2.pgm'
         gf = GaborFilter(img)
-        gb = gf.gabor2DFunction(4, 3)
+        gb = gf.gabor2DFunction(4, 3)        
         
     def testGaborResponse(self):
         img = '../data/orl_faces/s1/2.pgm'
         gf = GaborFilter(img)
         response = gf.response(4, 3)
-
+        output, imOutput = gf.outputImage(response)
+        imOutput.show()          
+        
+    
 if __name__ == "__main__":
     #import sys;sys.argv = ['', 'Test.testName']
+    # Import Psyco if available
+    try:
+        import psyco
+        psyco.full()
+    except ImportError:
+        pass
     unittest.main()
