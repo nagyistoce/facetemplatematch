@@ -136,7 +136,7 @@ def main(argv=None):
     # Import Psyco if available
     try:
         import psyco
-        psyco.profile()
+        psyco.full()
     except ImportError:
         print 'Psyco not installed, the program will just run slower'
     
