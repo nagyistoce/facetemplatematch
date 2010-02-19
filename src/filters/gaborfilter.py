@@ -47,38 +47,42 @@ class GaborFilter(object):
         Implementation of normalized 2-D Gabor filter function
         defined by Kyrki V, 2002
         '''
-        fmax=1/14
-        a=2
-        k=0
-        f = a**(-1*k)*fmax
-        theta = 2*pi/rotation
+        fmax = 1 / 14.0
+        a = 0.5
+        flist = [(a ** k) * fmax for k in xrange(frequency)]        
+        thetalist = [2 * pi * angle / rotation for angle in xrange(rotation)]
         
-        xy_index = np.transpose(np.nonzero(self.image))
+        set = [(f, theta) for f in flist for theta in thetalist] 
+        xy_index = np.transpose(np.nonzero(self.image)) # Get x,y index of image
         
+        # Image coordinates are centered to origin
         x = xy_index[:, 0]
+        x = x - (max(x)+min(x))/2
         y = xy_index[:, 1]
-        
-        x_new = x * cos(theta) + y * sin(theta)
-        x_new = np.ceil(np.maximum(0, abs(x_new)))
-        x_new = np.minimum(x_new, np.max(x)) 
-        
-        y_new = -1 * x * sin(theta) + y * cos(theta)
-        y_new = np.ceil(np.maximum(0, abs(y_new)))
-        y_new = np.minimum(y_new, np.max(y))
-        
-        N = f ** 2 / (pi * gamma * etha)
-        term2d = -1 * f ** 2 * (x_new ** 2 / gamma ** 2 + y_new ** 2 / etha ** 2)
-        gb = N * np.exp(term2d) * np.exp((2 * pi * f * x_new) * 1j)
+        y = y - (max(y)+min(y))/2
+                
+        # Get Gabor function for all frequencies and rotations
+        # then superpositioning for all rotations
+        gb = 0
+        for f, theta in set:        
+            x_new = x * cos(theta) + y * sin(theta)
+            x_new = np.ceil(x_new)         
+            
+            y_new = -1 * x * sin(theta) + y * cos(theta)
+            y_new = np.ceil(y_new)        
+            
+            N = float(f ** 2) / float(pi * gamma * etha)
+            term2d = -1 * f ** 2 * (x_new ** 2 / gamma ** 2 + y_new ** 2 / etha ** 2)
+            gb += N * np.exp(term2d) * np.exp((2 * pi * f * x_new) * 1j)
         
         return gb
     
     def response(self, frequency, rotation, gamma=1, etha=1):
         gb = self.gabor2DFunction(frequency, rotation, gamma, etha) 
-        
+        gb = gb.reshape(self.image.shape)
         # Get magnitude of Gabor function?
-        gb_magnitude = np.abs(gb)
-        gb_magnitude = gb_magnitude.reshape(self.image.shape)    
-        response = convolve.convolve2d(self.image, gb_magnitude)        
+#        gb_magnitude = np.abs(gb)                
+        response = convolve.convolve2d(self.image, gb.real)        
         return response
 
     def outputImage(self, response):
