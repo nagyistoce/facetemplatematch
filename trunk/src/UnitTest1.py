@@ -24,10 +24,13 @@ OTHER DEALINGS IN THE SOFTWARE.
 '''
 
 import unittest
+import Image
+import datetime
+import os
+
 from ImageUtils import utils
 from FeatureExtract.facefeature import GaborFeatureSpace
 from filters.gaborfilter import GaborFilter
-import cProfile
 
 class Test(unittest.TestCase):
      
@@ -39,20 +42,27 @@ class Test(unittest.TestCase):
 #    def testGabprFeatureSpace(self):
 #        img = '../data/orl_faces/s1/2.pgm'
 #        imageArray = utils.im2array(img) 
-#        gfs = GaborFeatureSpace(imageArray)
+#        gfs = GaborFeatureSpace(imageArray)    
         
     def testGaborFunction(self):
-        img = '../data/orl_faces/s1/2.pgm'
-        gf = GaborFilter(img)
+        img = '2.pgm'
+        img_path = os.path.join('..','data','orl_faces', 's1',img)
+        gf = GaborFilter(img_path)
         gb = gf.gabor2DFunction(4, 3)        
         
     def testGaborResponse(self):
-        img = '../data/orl_faces/s1/2.pgm'
-        gf = GaborFilter(img)
+        img = '2.pgm'
+        img_path = os.path.join('..','data','orl_faces', 's1',img)
+        gf = GaborFilter(img_path)
         response = gf.response(4, 3)
         output, imOutput = gf.outputImage(response)
-        imOutput.show()          
-        
+#        im = Image.open(img)
+#        im.show()
+        imOutput.show()
+        today = datetime.date.today()      
+        filename  = os.path.join('..','data', 'results', \
+                                 's1_2_'+'gb_response_real-'+str(today)+'.jpg')
+        imOutput.save(filename)
     
 if __name__ == "__main__":
     #import sys;sys.argv = ['', 'Test.testName']
